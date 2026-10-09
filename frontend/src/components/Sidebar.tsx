@@ -30,7 +30,7 @@ export const Sidebar: React.FC<{ selectedCircle?: string; onSelectCircle?: (circ
 
   const navItems = [
     { to: '/', label: 'Home Feed', icon: Home, end: true },
-    { to: '/reels', label: 'Tech Reels', icon: Film, badge: 'New' },
+    { to: '/reels', label: 'Reels', icon: Film, badge: 'New' },
     { to: '/communities', label: 'Communities', icon: Users },
     { to: '/explore', label: 'Explore & Search', icon: Compass },
     { to: '/developers', label: 'Developer Hub', icon: Code2 },
