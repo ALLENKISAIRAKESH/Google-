@@ -26,6 +26,7 @@ import { AuthPage } from './pages/AuthPage';
 import { AboutPage } from './pages/AboutPage';
 import { ReelsPage } from './pages/ReelsPage';
 import { SummaryPage } from './pages/SummaryPage';
+import { PresentationPage } from './pages/PresentationPage';
 
 export function App() {
   const [selectedCircle, setSelectedCircle] = useState<string | undefined>();
@@ -59,6 +60,8 @@ export function App() {
                     <Route path="/communities/:slug" element={<CommunityDetailPage />} />
                     <Route path="/reels" element={<ReelsPage />} />
                     <Route path="/summary" element={<SummaryPage />} />
+                    <Route path="/presentation" element={<PresentationPage />} />
+                    <Route path="/pitch" element={<PresentationPage />} />
                     <Route path="/explore" element={<ExplorePage />} />
                     <Route path="/search" element={<ExplorePage />} />
                     <Route path="/developers" element={<DevelopersPage />} />

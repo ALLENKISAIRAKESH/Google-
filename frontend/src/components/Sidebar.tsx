@@ -13,7 +13,9 @@ import {
   ShieldCheck, 
   Settings, 
   CircleDot,
-  Film
+  Film,
+  Tv,
+  FileText
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
@@ -30,6 +32,8 @@ export const Sidebar: React.FC<{ selectedCircle?: string; onSelectCircle?: (circ
 
   const navItems = [
     { to: '/', label: 'Home Feed', icon: Home, end: true },
+    { to: '/presentation', label: 'Pitch Deck (PPT)', icon: Tv, badge: 'PPT' },
+    { to: '/summary', label: '1-Page Summary', icon: FileText },
     { to: '/reels', label: 'Tech Reels', icon: Film, badge: 'New' },
     { to: '/communities', label: 'Communities', icon: Users },
     { to: '/explore', label: 'Explore & Search', icon: Compass },

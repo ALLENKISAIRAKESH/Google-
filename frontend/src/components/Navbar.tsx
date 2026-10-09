@@ -16,7 +16,8 @@ import {
   Users,
   PenTool,
   Database,
-  Film
+  Film,
+  Tv
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useData } from '../context/DataContext';
@@ -85,6 +86,16 @@ export const Navbar: React.FC<{ onOpenCreatePost?: () => void }> = ({ onOpenCrea
         {/* Right: Actions, Notifications, Profile & Switcher */}
         <div className="flex items-center gap-2 sm:gap-3">
           
+          {/* Pitch Deck PPT Quick Link */}
+          <Link
+            to="/presentation"
+            className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300 border border-red-200 dark:border-red-900/50 text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors shadow-xs"
+            title="Open Hackathon Presentation (PPT)"
+          >
+            <Tv className="h-3.5 w-3.5 text-red-500" />
+            <span>Pitch Deck (PPT)</span>
+          </Link>
+
           {/* Quick Create Dropdown */}
           <div className="relative">
             <button
