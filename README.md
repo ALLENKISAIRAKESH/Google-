@@ -14,8 +14,8 @@ Features reimagined **Circles** audience control, **Instant Connect** opt-in ser
 
 ## 📑 Submission Documentation
 
-- **1-Page Summary & Rubric Defense**: See [1_PAGE_SUMMARY.md](./1_PAGE_SUMMARY.md) or visit `/summary` in the running app.
-- **Presentation Deck (PPT)**: Download [`Google+_Redesign_Pitch_Deck.pptx`](./Google+_Redesign_Pitch_Deck.pptx), view markdown [PRESENTATION_DECK.md](./PRESENTATION_DECK.md), or view interactive slides at `/presentation`.
+- **1-Page Summary & Rubric Defense**: See [1_PAGE_SUMMARY.md](./1_PAGE_SUMMARY.md).
+- **Presentation Deck (PPT)**: PowerPoint file [`Google+_Redesign_Pitch_Deck.pptx`](./Google+_Redesign_Pitch_Deck.pptx) and slide notes [PRESENTATION_DECK.md](./PRESENTATION_DECK.md).
 - **Backend Architecture & SQL Schema**: See [backend/README.md](./backend/README.md).
 - **Frontend App Architecture**: See [frontend/README.md](./frontend/README.md).
 
