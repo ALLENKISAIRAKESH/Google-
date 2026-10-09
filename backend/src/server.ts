@@ -31,18 +31,81 @@ app.get('/api/health', (_req: Request, res: Response) => {
   });
 });
 
-// 2. Safe Profile Link Validation (No Scraping)
-app.post('/api/validate-link', (req: Request, res: Response) => {
+// 2. Safe Profile Link Validation & Preview (No Scraping)
+app.post(['/api/validate-link', '/api/link-preview'], (req: Request, res: Response) => {
   const { url } = req.body;
   if (!url || typeof url !== 'string') {
     return res.status(400).json({ error: 'A valid URL string is required.' });
   }
 
   const result = validateExternalLink(url);
-  res.json(result);
+  const preview = {
+    ...result,
+    title: result.isValid ? `${result.platform.toUpperCase()} Profile / Resource` : 'Invalid Link',
+    domain: result.cleanUrl ? new URL(result.cleanUrl).hostname : 'unknown',
+    isSafe: result.isValid
+  };
+  res.json(preview);
 });
 
-// 3. Instant Connect Rate Limiting & Safety Verification
+// 3. Instant Connect Matchmaking Candidates API
+app.post('/api/instant-connect/candidates', (req: Request, res: Response) => {
+  const { currentUserId, eventId, goal, skills = [] } = req.body;
+  
+  // Sample candidate pool for matching algorithm
+  const pool = [
+    {
+      userId: 'usr_2',
+      displayName: 'Dr. Elena Rostova',
+      role: 'Principal AI Researcher',
+      skills: ['Python', 'PyTorch', 'Transformers', 'CUDA'],
+      goal: 'mentor',
+      bio: 'Looking to mentor promising AI hackathon teams.'
+    },
+    {
+      userId: 'usr_3',
+      displayName: 'Jordan Lee',
+      role: 'Open-Source Contributor',
+      skills: ['Rust', 'WebAssembly', 'Distributed Systems'],
+      goal: 'teammate',
+      bio: 'Seeking frontend developers for low-latency database project.'
+    },
+    {
+      userId: 'usr_4',
+      displayName: 'Maya Chen',
+      role: 'Lead Mobile Engineer',
+      skills: ['TypeScript', 'React Native', 'Swift', 'UI/UX'],
+      goal: 'teammate',
+      bio: 'Building cross-platform mobile app for social good.'
+    }
+  ];
+
+  // Scoring algorithm: overlap of complementary skills + goal alignment
+  const scoredCandidates = pool
+    .filter(c => c.userId !== currentUserId)
+    .map(c => {
+      let score = 50; // base score
+      if (goal && c.goal === goal) score += 25;
+      const sharedOrComplementary = c.skills.filter(s => 
+        skills.some((userSkill: string) => userSkill.toLowerCase() === s.toLowerCase())
+      );
+      score += Math.min(25, sharedOrComplementary.length * 10);
+
+      return {
+        ...c,
+        matchScore: Math.min(99, score),
+        commonKeywords: sharedOrComplementary
+      };
+    })
+    .sort((a, b) => b.matchScore - a.matchScore);
+
+  res.json({
+    eventId: eventId || 'evt_hackathon',
+    candidates: scoredCandidates
+  });
+});
+
+// 4. Instant Connect Rate Limiting & Safety Verification
 app.post('/api/instant-connect/check-rate-limit', (req: Request, res: Response) => {
   const { userId } = req.body;
   if (!userId) {
@@ -60,6 +123,26 @@ app.post('/api/instant-connect/check-rate-limit', (req: Request, res: Response) 
   res.json({
     allowed: true,
     remainingRequests: status.remaining
+  });
+});
+
+// 5. Automated Content Toxicity & Link Spam Inspection
+app.post('/api/moderation/inspect', (req: Request, res: Response) => {
+  const { content } = req.body;
+  if (!content || typeof content !== 'string') {
+    return res.status(400).json({ error: 'Text content string is required for inspection.' });
+  }
+
+  const toxicWords = ['spam', 'phishing', 'scam', 'malware', 'hack_now', 'free_crypto'];
+  const lower = content.toLowerCase();
+  const flaggedWords = toxicWords.filter(w => lower.includes(w));
+
+  const isSuspicious = flaggedWords.length > 0;
+  res.json({
+    safe: !isSuspicious,
+    flaggedWords,
+    toxicityScore: isSuspicious ? 0.85 : 0.02,
+    recommendation: isSuspicious ? 'FLAG_FOR_REVIEW' : 'APPROVE'
   });
 });
 
