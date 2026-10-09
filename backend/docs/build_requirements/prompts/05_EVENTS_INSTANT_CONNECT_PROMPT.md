@@ -1,0 +1,3 @@
+# Phase 5 — Events and Instant Connect prompt
+
+Implement event create/edit/cancel, RSVP/registration, attendee privacy and the required opt-in Instant Connect flow from the PRD. Default networking opt-in to OFF. The user must activate it per event and choose visible fields and a networking goal. Only opted-in registrants can appear in discovery. Opt-out must immediately remove a user from results. Support intro requests with accept/decline/ignore, blocking, reporting and reasonable rate limits. Never expose email, phone or hidden fields. Event organizers must not be able to opt users in. Add RLS policies and tests for these invariants.
